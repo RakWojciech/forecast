@@ -1,0 +1,27 @@
+
+.forecast {
+    padding: 0 8vw;
+    h2 {
+        text-align: center;
+    }
+    .city_details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        .main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+            h5 {
+                padding: 0;
+                margin: .5rem;
+            }
+            img {
+                height: 3rem;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,37 @@
+<form (submit)="submit()">
+    <input type="text" class="form-control" id="CityName" placeholder="Company Name" [(ngModel)]="CityName" [ngModelOptions]="{standalone: true}">
+</form>
+
+<div class="forecast">
+    <div *ngFor="let pogoda of pogodaa">
+        <h2>{{pogoda.name}}</h2>
+        <div class="city_details">
+            <div class="main temp">
+                <img src="../assets/images/temp.svg" alt="">
+                <h3>Temp:</h3>
+                <h3>{{pogoda.main.temp}}</h3>
+            </div>
+            <div class="main pressure">
+                <img src="../assets/images/humidity.svg" alt="">
+                <h3>Pressure:</h3>
+                <h3>{{pogoda.main.pressure}}</h3>
+            </div>
+            <div class="main humidity">
+                <img src="../assets/images/humidity.svg" alt="">
+                <h3>Humidity: </h3>
+                <h3>{{pogoda.main.humidity}}</h3>
+            </div>
+            <div class="main temp_min">
+                <img src="../assets/images/temp_min.svg" alt="">
+                <h3>Temp Min: </h3>
+                <h3>{{pogoda.main.temp_min}}</h3>
+            </div>
+            <div class="main temp_max">
+                <img src="../assets/images/temp_max.svg" alt="">
+                <h3>Temp Max: </h3>
+                <h3>{{pogoda.main.temp_max}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>
