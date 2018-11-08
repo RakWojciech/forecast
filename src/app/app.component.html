@@ -5,9 +5,9 @@
 <div class="forecast">
     <!-- {{pogodaaa}} -->
     <div *ngFor="let pogoda of forecast">
-        <!-- <h2>{{CityName}}</h2> -->
-        {{forecast | json}}
-        <!-- <div class="city_details" *ngIf="last < 5">
+        <h2>{{CityName}}</h2>
+        <!-- {{forecast | json}} -->
+        <div class="city_details">
             <div class="main temp">
                 <p>{{pogoda.dt_txt}}</p>
                 <img src="../assets/images/temp.svg" alt="">
@@ -34,7 +34,7 @@
                 <h3>Temp Max: </h3>
                 <h3>{{pogoda.main.temp_max}}</h3>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
 <router-outlet></router-outlet>

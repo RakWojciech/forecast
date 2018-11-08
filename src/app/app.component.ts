@@ -82,7 +82,7 @@ export class AppComponent {
                     // }
 
                     // console.log(this.forecast = this.pogodaaa.list);
-                    console.log(this.forecast = this.forecastList);
+                    console.log(this.forecast = this.forecastList.list);
                     // this.forecast.dt = this.pogodaaa.dt;
                     // this.forecast.name = e.name;
                 }, 500);
