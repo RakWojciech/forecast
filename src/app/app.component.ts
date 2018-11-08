@@ -10,114 +10,82 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent {
     city;
     CityName;
-    pogoda;
-    pogodaa = [
-        {
-            "coord":
-                {"lon": 145.77, "lat": -16.92},
-            "weather": [{"id": 803, "main": "Clouds", "description": "broken clouds", "icon": "04n"}],
-            "base": "cmc stations",
-            "main": {"temp": 293.25, "pressure": 1019, "humidity": 83, "temp_min": 289.82, "temp_max": 295.37},
-            "wind": {"speed": 5.1, "deg": 150},
-            "clouds": {"all": 75},
-            "rain": {"3h": 3},
-            "dt": 1435658272,
-            "sys": {"type": 1, "id": 8166, "message": 0.0166, "country": "AU", "sunrise": 1435610796, "sunset": 1435650870},
-            "id": 2172797,
-            "name": "Cairns",
-            "cod": 200
-        },
-        {
-            "coord":
-                {"lon": 145.77, "lat": -16.92},
-            "weather": [{"id": 803, "main": "Clouds", "description": "broken clouds", "icon": "04n"}],
-            "base": "cmc stations",
-            "main": {"temp": 293.25, "pressure": 1019, "humidity": 83, "temp_min": 289.82, "temp_max": 295.37},
-            "wind": {"speed": 5.1, "deg": 150},
-            "clouds": {"all": 75},
-            "rain": {"3h": 3},
-            "dt": 1435658272,
-            "sys": {"type": 1, "id": 8166, "message": 0.0166, "country": "AU", "sunrise": 1435610796, "sunset": 1435650870},
-            "id": 2172797,
-            "name": "Cairns",
-            "cod": 200
-        },
-        {
-            "coord":
-                {"lon": 145.77, "lat": -16.92},
-            "weather": [{"id": 803, "main": "Clouds", "description": "broken clouds", "icon": "04n"}],
-            "base": "cmc stations",
-            "main": {"temp": 293.25, "pressure": 1019, "humidity": 83, "temp_min": 289.82, "temp_max": 295.37},
-            "wind": {"speed": 5.1, "deg": 150},
-            "clouds": {"all": 75},
-            "rain": {"3h": 3},
-            "dt": 1435658272,
-            "sys": {"type": 1, "id": 8166, "message": 0.0166, "country": "AU", "sunrise": 1435610796, "sunset": 1435650870},
-            "id": 2172797,
-            "name": "Cairns",
-            "cod": 200
-        },
-        {
-            "coord":
-                {"lon": 145.77, "lat": -16.92},
-            "weather": [{"id": 803, "main": "Clouds", "description": "broken clouds", "icon": "04n"}],
-            "base": "cmc stations",
-            "main": {"temp": 293.25, "pressure": 1019, "humidity": 83, "temp_min": 289.82, "temp_max": 295.37},
-            "wind": {"speed": 5.1, "deg": 150},
-            "clouds": {"all": 75},
-            "rain": {"3h": 3},
-            "dt": 1435658272,
-            "sys": {"type": 1, "id": 8166, "message": 0.0166, "country": "AU", "sunrise": 1435610796, "sunset": 1435650870},
-            "id": 2172797,
-            "name": "Cairns",
-            "cod": 200
-        },
-        {
-            "coord":
-                {"lon": 145.77, "lat": -16.92},
-            "weather": [{"id": 803, "main": "Clouds", "description": "broken clouds", "icon": "04n"}],
-            "base": "cmc stations",
-            "main": {"temp": 293.25, "pressure": 1019, "humidity": 83, "temp_min": 289.82, "temp_max": 295.37},
-            "wind": {"speed": 5.1, "deg": 150},
-            "clouds": {"all": 75},
-            "rain": {"3h": 3},
-            "dt": 1435658272,
-            "sys": {"type": 1, "id": 8166, "message": 0.0166, "country": "AU", "sunrise": 1435610796, "sunset": 1435650870},
-            "id": 2172797,
-            "name": "Cairns",
-            "cod": 200
-        }
-    ];
-
-    forecast = {
-        "id": "",
-        "name": "",
-        "country": "",
-    };
-
+    pogodaaa;
+    // dt;
+    // dateArray = [];
+    // forecast = [];
+    // showDays = [];
+    forecastList;
+    forecast = [];
     constructor(private http: HttpClient, private _cityId: CityIdService) {
 
     }
-
-    showConfig() {
-    }
-
     ngOnInit() {
         this._cityId.getCityId().subscribe(data => this.city = data);
     }
-
+    daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
     submit() {
         // console.log(this.city);
-        this.city.forEach(e => {
+        this.city.forEach((e,index) => {
             // console.log(e);
             if (e.name == this.CityName) {
-                // console.log(e.name);
+                console.log(e.name);
 
-                this.http.get("api.openweathermap.org/data/2.5/weather?q=" + e.name + "&APPID=08ab4a922b5d987bf77948a7f68a1f8c").subscribe(data => this.pogoda = data);
+                this._cityId.getByName(e.name).subscribe(data => {
+
+                    this.forecastList = data;
+                    // let count = 0;
+                    // for(var i = 0; i < this.pogodaaa.list.length; i++) {
+                        // console.log(this.pogodaaa.list[i]);
+                        // var date = new Date(this.pogodaaa.list[i].dt)
+                        // var month = date.getDate();    
+                        // var year = date.getFullYear();    
+                        // console.log(this.daysInMonth(month, year))
+                        // var date = new Date(this.pogodaaa.list[i].dt_txt);
+                        // if(!this.dateArray.includes(date.getDate())) this.dateArray.push(date.getDate());
+                       
+                        // console.log(this.dateArray);
+                        
+                        // let count = 0;
+                        // for(let j = this.pogodaaa.list.length; i--;) {
+                        //     // 
+                        //     if(count < 5) console.log(this.dateArray[j]);
+                        //     count++;
+                        // }
+                        // console.log(this.dateArray)
+                        // console.log( date.getDate());
+
+                        // if(count < 5) {
+                        // }
+                        // count++;
+                    // }
+                    // let count = 0;
+                    // for(let j = this.dateArray.length; j--;) {
+                    //     if(count < 5) this.showDays.push(this.dateArray(j));
+                    //     count++;
+                    // }
+                    // console.log(this.showDays);
+                });
                 // this.forecast["id"] = e.id;
                 // this.forecast["name"] = e.name;
                 // this.forecast["country"] = e.country;
-                console.log(this.pogodaa);
+                // console.log(this.pogoda);
+                setTimeout(()=>{
+                    // console.log(this.pogodaaa.list[index]);
+                    // let count = 0;
+                    // for(let i = this.pogodaaa.list.length; i--;) {
+                    //     // 
+                    //     if(count < 5) this.forecast.push(this.pogodaaa.list[i]);
+                    //     count++;
+                    // }
+
+                    // console.log(this.forecast = this.pogodaaa.list);
+                    console.log(this.forecast = this.forecastList);
+                    // this.forecast.dt = this.pogodaaa.dt;
+                    // this.forecast.name = e.name;
+                }, 500);
             }
         });
 
