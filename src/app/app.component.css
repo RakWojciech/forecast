@@ -1,21 +1,3 @@
-.forecast {
-  padding: 0 8vw; }
-  .forecast h2 {
-    text-align: center; }
-  .forecast .city_details {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row; }
-    .forecast .city_details .main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-direction: column; }
-      .forecast .city_details .main h5 {
-        padding: 0;
-        margin: .5rem; }
-      .forecast .city_details .main img {
-        height: 3rem; }
+
 
 /*# sourceMappingURL=app.component.css.map */

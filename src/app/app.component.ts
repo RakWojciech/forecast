@@ -1,94 +1,91 @@
 import {Component, OnInit} from '@angular/core';
-import {CityIdService} from "./cityid.service";
-import {HttpClient} from "@angular/common/http";
+import {CityIdService} from './cityid.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-    city;
-    CityName;
-    pogodaaa;
-    // dt;
-    // dateArray = [];
-    // forecast = [];
-    // showDays = [];
-    forecastList;
-    forecast = [];
-    constructor(private http: HttpClient, private _cityId: CityIdService) {
+export class AppComponent implements OnInit {
+	city;
+	cityArray = [];
+	CityName;
+	dateArray = [];
+	showDays = [];
+	forecastList;
+	forecastData;
+	forecast = [];
+	displayDays = [];
+	loading = false;
+	avgPressure = [];
+	avg;
+	constructor(private http: HttpClient, private _cityId: CityIdService) {
 
-    }
-    ngOnInit() {
-        this._cityId.getCityId().subscribe(data => this.city = data);
-    }
-    daysInMonth (month, year) {
-        return new Date(year, month, 0).getDate();
-    }
-    submit() {
-        // console.log(this.city);
-        this.city.forEach((e,index) => {
-            // console.log(e);
-            if (e.name == this.CityName) {
-                console.log(e.name);
+	}
 
-                this._cityId.getByName(e.name).subscribe(data => {
+	ngOnInit() {
+		this._cityId.getCityId().subscribe(data => {
+			this.city = data;
 
-                    this.forecastList = data;
-                    // let count = 0;
-                    // for(var i = 0; i < this.pogodaaa.list.length; i++) {
-                        // console.log(this.pogodaaa.list[i]);
-                        // var date = new Date(this.pogodaaa.list[i].dt)
-                        // var month = date.getDate();    
-                        // var year = date.getFullYear();    
-                        // console.log(this.daysInMonth(month, year))
-                        // var date = new Date(this.pogodaaa.list[i].dt_txt);
-                        // if(!this.dateArray.includes(date.getDate())) this.dateArray.push(date.getDate());
-                       
-                        // console.log(this.dateArray);
-                        
-                        // let count = 0;
-                        // for(let j = this.pogodaaa.list.length; i--;) {
-                        //     // 
-                        //     if(count < 5) console.log(this.dateArray[j]);
-                        //     count++;
-                        // }
-                        // console.log(this.dateArray)
-                        // console.log( date.getDate());
+			this.cityList();
+		});
+	}
+	cityList() {
+		this.city.forEach( e => {
+			this.cityArray.push( e.name);
+		});
+	}
+	calculateDayAvgPressure(e) {
+		console.log(e );
+		// e.forEach( el => {
+		// 	console.log(el.main.pressure);
+		// });
+	}
+	submit() {
+		this.loading = true;
+		this.city.forEach(e => {
+			if (e.name === this.CityName) {
 
-                        // if(count < 5) {
-                        // }
-                        // count++;
-                    // }
-                    // let count = 0;
-                    // for(let j = this.dateArray.length; j--;) {
-                    //     if(count < 5) this.showDays.push(this.dateArray(j));
-                    //     count++;
-                    // }
-                    // console.log(this.showDays);
-                });
-                // this.forecast["id"] = e.id;
-                // this.forecast["name"] = e.name;
-                // this.forecast["country"] = e.country;
-                // console.log(this.pogoda);
-                setTimeout(()=>{
-                    // console.log(this.pogodaaa.list[index]);
-                    // let count = 0;
-                    // for(let i = this.pogodaaa.list.length; i--;) {
-                    //     // 
-                    //     if(count < 5) this.forecast.push(this.pogodaaa.list[i]);
-                    //     count++;
-                    // }
+				this._cityId.getByName(e.name).subscribe(data => {
 
-                    // console.log(this.forecast = this.pogodaaa.list);
-                    console.log(this.forecast = this.forecastList.list);
-                    // this.forecast.dt = this.pogodaaa.dt;
-                    // this.forecast.name = e.name;
-                }, 500);
-            }
-        });
+					this.forecastList = data;
+					this.forecastData = this.forecastList.list;
+					for (let i = 0; i < this.forecastData.length; i++) {
 
-        // console.log(this.forecast);
-    }
+						const date = new Date(this.forecastData[i].dt_txt);
+
+						if (!this.dateArray.includes(date.getDate())) {
+							this.dateArray.push(date.getDate());
+						}
+					}
+
+					this.showDays = this.dateArray.slice(Math.max(this.dateArray.length - 5, 1));
+
+					this.showDays.forEach(e => {
+						for (let i = 0; i < this.forecastData.length; i++) {
+							const date = new Date(this.forecastData[i].dt_txt);
+							if (date.getDate() === e) {
+								this.displayDays.push(this.forecastData[i]);
+								// this.avgPressure.day = e;
+								// this.avgPressure.day.pressure = this.forecastData[i].main.pressure;
+								// this.avgPressure.push({e : { 'pressure' : this.forecastData[i].main.pressure } });
+								// console.log(this.forecastData[i]);
+							}
+						}
+					});
+					// this.avg = this.avgPressure.reduce((previous, current) => current += previous);
+					// this.avg = this.avg / this.avgPressure.length;
+					// console.log("AVG"+this.avg);
+					// console.log(this.avgPressure);
+				});
+				setTimeout(() => {
+					this.forecast = this.displayDays;
+
+					// console.log(this.displayDays);
+					this.loading = false;
+				}, 500);
+			}
+		});
+	}
 }

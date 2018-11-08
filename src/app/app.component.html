@@ -1,40 +1,87 @@
-<form (submit)="submit()">
-    <input type="text" class="form-control" id="CityName" placeholder="Company Name" [(ngModel)]="CityName" [ngModelOptions]="{standalone: true}">
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-12 form">
+            <h2>Type city to check temperature</h2>
+            <form class="form-inline" (submit)="submit()">
+                <input type="text" class="form-control" id="CityName" placeholder="Company Name" [(ngModel)]="CityName" [ngModelOptions]="{standalone: true}">
+                <button><img src="../assets/images/search.svg" alt=""></button>
+            </form>
+        </div>
+    </div>
 
-<div class="forecast">
-    <!-- {{pogodaaa}} -->
-    <div *ngFor="let pogoda of forecast">
-        <h2>{{CityName}}</h2>
-        <!-- {{forecast | json}} -->
-        <div class="city_details">
-            <div class="main temp">
-                <p>{{pogoda.dt_txt}}</p>
-                <img src="../assets/images/temp.svg" alt="">
-                <h3>Temp:</h3>
-                <h3>{{pogoda.main.temp}}</h3>
-            </div>
-            <div class="main pressure">
-                <img src="../assets/images/humidity.svg" alt="">
-                <h3>Pressure:</h3>
-                <h3>{{pogoda.main.pressure}}</h3>
-            </div>
-            <div class="main humidity">
-                <img src="../assets/images/humidity.svg" alt="">
-                <h3>Humidity: </h3>
-                <h3>{{pogoda.main.humidity}}</h3>
-            </div>
-            <div class="main temp_min">
-                <img src="../assets/images/temp_min.svg" alt="">
-                <h3>Temp Min: </h3>
-                <h3>{{pogoda.main.temp_min}}</h3>
-            </div>
-            <div class="main temp_max">
-                <img src="../assets/images/temp_max.svg" alt="">
-                <h3>Temp Max: </h3>
-                <h3>{{pogoda.main.temp_max}}</h3>
+    <!--<h2>{{CityName}}</h2>-->
+    <app-loading *ngIf="loading"></app-loading>
+    <div class="row">
+        <div class="col-12">
+            <div *ngFor="let pogoda of forecast">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <div class="forecast">
+
+                            <p><b>{{pogoda.dt_txt}}</b></p>
+                            <div class="city_details">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-4">
+                                        <div class="main temp">
+
+                                            <img src="../assets/images/temp.svg" class="img-fluid" alt="">
+                                            <div>
+                                                <h2>{{pogoda.main.temp | round}} &deg;C</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-8 d-flex align-items-center justify-content-start flex-column">
+                                        <div class="row">
+                                            <div class="col-12 d-flex align-items-center">
+                                                <div class="main pressure">
+                                                    <img src="../assets/images/humidity.svg" class="img-fluid" alt="">
+                                                    <div>
+                                                        <h5>Pressure:</h5>
+                                                        <h5>{{pogoda.main.pressure}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="main humidity">
+                                                    <div>
+                                                        <img src="../assets/images/humidity.svg" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div>
+                                                        <h5>Humidity: </h5>
+                                                        <h5>{{pogoda.main.humidity}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex align-items-center">
+                                                <div class="main temp_min">
+                                                    <div>
+
+                                                        <img src="../assets/images/temp_min.svg" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div>
+
+                                                        <h5>Temp Min: </h5>
+                                                        <h5>{{pogoda.main.temp_min | round}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="main temp_max">
+                                                    <img src="../assets/images/temp_max.svg" class="img-fluid" alt="">
+                                                    <div>
+
+                                                        <h5>Temp Max: </h5>
+                                                        <h5>{{pogoda.main.temp_max | round}}</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <router-outlet></router-outlet>
 </div>
-<router-outlet></router-outlet>

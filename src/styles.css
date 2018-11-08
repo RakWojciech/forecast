@@ -1,3 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+@import url(~bootstrap/dist/css/bootstrap.css);
+body {
+  background-color: #484b54; }
+
+.form {
+  margin-top: 3rem;
+  margin-bottom: 5rem; }
+  .form h2 {
+    margin-bottom: 2rem;
+    color: #fff;
+    text-align: center; }
+  .form form.form-inline button:focus, .form form.form-inline input:focus {
+    outline: 0;
+    box-shadow: none; }
+  .form form.form-inline input {
+    padding: 30px;
+    border-radius: unset;
+    width: 90%;
+    border: none; }
+  .form form.form-inline button {
+    width: 10%;
+    padding: 18px;
+    border: none;
+    background-color: #000; }
+    .form form.form-inline button img {
+      height: 20px; }
+    .form form.form-inline button:hover {
+      cursor: pointer; }
+
+.jumbotron {
+  padding: 1rem;
+  background-color: #fff; }
+  .jumbotron .forecast h2 {
+    text-align: center; }
+  .jumbotron .forecast .city_details .main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 1rem; }
+    .jumbotron .forecast .city_details .main h5 {
+      padding: 0;
+      margin: .5rem; }
+    .jumbotron .forecast .city_details .main img {
+      height: 3rem;
+      margin-right: 2rem; }
+    .jumbotron .forecast .city_details .main p {
+      margin: 0; }
+    .jumbotron .forecast .city_details .main.temp {
+      flex-direction: row;
+      justify-content: flex-end; }
+      .jumbotron .forecast .city_details .main.temp h2 {
+        font-size: 3rem; }
+      .jumbotron .forecast .city_details .main.temp img {
+        margin-right: 1rem; }
 
 /*# sourceMappingURL=styles.css.map */
