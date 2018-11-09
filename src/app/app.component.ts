@@ -32,11 +32,13 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.CityNameChild.nativeElement.focus()
+		this.CityNameChild.nativeElement.focus();
 		this._cityId.getCityId().subscribe(data => {
 			this.city = data;
 			console.log(data);
-			this.cityList();
+			setTimeout(() => {
+				this.cityList();
+			}, 500);
 		});
 	}
 
@@ -191,6 +193,7 @@ export class AppComponent implements OnInit {
 			}, 500);
 		}
 	}
+
 	dailyChar(e) {
 		this.dailyCharArr = [];
 		if (this.CityName) {

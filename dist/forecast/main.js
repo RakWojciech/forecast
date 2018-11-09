@@ -410,7 +410,9 @@ var AppComponent = /** @class */ (function () {
         this._cityId.getCityId().subscribe(function (data) {
             _this.city = data;
             console.log(data);
-            _this.cityList();
+            setTimeout(function () {
+                _this.cityList();
+            }, 500);
         });
     };
     AppComponent.prototype.cityList = function () {
@@ -705,11 +707,11 @@ var CityIdService = /** @class */ (function () {
         this.http = http;
     }
     CityIdService.prototype.getCityId = function () {
-        return this.http.get('./assets/data.json');
+        return this.http.get('https://weaterforecast.herokuapp.com/assets/data.json');
     };
     CityIdService.prototype.getByName = function (location) {
         // return this.http.get(this._url);
-        return this.http.get('http://api.openweathermap.org/data/2.5/forecast?q=' +
+        return this.http.get('https://api.openweathermap.org/data/2.5/forecast?q=' +
             location + '&units=metric&APPID=08ab4a922b5d987bf77948a7f68a1f8c');
     };
     CityIdService = __decorate([
