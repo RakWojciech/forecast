@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 		this.CityNameChild.nativeElement.focus()
 		this._cityId.getCityId().subscribe(data => {
 			this.city = data;
-
+			console.log(data);
 			this.cityList();
 		});
 	}
