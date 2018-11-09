@@ -1,0 +1,119 @@
+<app-loading *ngIf="loading">
+</app-loading>
+<div class="container">
+    <div class="row">
+        <div class="col-12 form">
+            <h2>Type city to check temperature</h2>
+            <form class="form-inline" (submit)="submit()">
+                <input type="text" id="CityName" placeholder="City name" [(ngModel)]="CityName" [ngModelOptions]="{standalone: true}" [class.error]="!showContent && !homeState" #CityNameChild>
+                <button><img src="../assets/images/search.svg" alt=""></button>
+            </form>
+            <p *ngIf="!showContent && !homeState" class="error">There is no city with that name</p>
+        </div>
+    </div>
+    <div *ngIf="showContent">
+
+        <div class="row" *ngIf="avg">
+            <div class="col-12">
+                <h3>Average pressure: {{avg | round}} hpa</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="sort-day mb-3">
+                    <h3>Temperature chart</h3>
+                    <div class="input-group mt-3 mb-3">
+                        <input type="date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" #dailyChart>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="dailyChar()">Load</button>
+                        </div>
+                    </div>
+                </div>
+                <canvas #chart></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="sort-day mt-3 mb-3">
+                    <h3>Daily sort</h3>
+                    <div class="input-group mt-3 mb-3">
+                        <input type="date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" #dailySort>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="dailyMeasurement()">Load</button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let pogoda of forecast">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <div class="forecast">
+                                <p class="datetime"><b>{{pogoda.dt_txt}}</b></p>
+                                <div class="city_details">
+                                    <div class="row w-100 align-items-center">
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="main temp d-flex align-items-center justify-content-center flex-row">
+                                                <img src="../../../assets/images/temp.svg" class="img-fluid" alt="">
+                                                <div>
+                                                    <h2>{{pogoda.main.temp | round}} &deg;C</h2>
+                                                </div>
+                                            </div>
+                                            <div class="main wind d-flex align-items-center justify-content-lg-end  justify-content-center flex-row">
+                                                <img src="../../../assets/images/wind.svg" alt="">
+                                                <div>
+                                                    <p>{{pogoda.wind.speed}} km/h</p>
+                                                    <p>{{pogoda.weather[0].description}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center justify-content-start flex-column">
+                                            <div class="row">
+                                                <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
+                                                    <div class="main pressure d-flex align-items-center justify-content-between flex-row">
+                                                        <img src="../../../assets/images/pressure.png" class="img-fluid" alt="">
+                                                        <div>
+                                                            <h5>Pressure:</h5>
+                                                            <h5>{{pogoda.main.pressure | round}} hpa</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="main humidity d-flex align-items-center justify-content-between flex-row">
+                                                        <div>
+                                                            <img src="../../../assets/images/humidity.svg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <h5>Humidity: </h5>
+                                                            <h5>{{pogoda.main.humidity}} %</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
+                                                    <div class="main temp_min d-flex align-items-center justify-content-between flex-row">
+                                                        <div>
+                                                            <img src="../../../assets/images/temp_min.svg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <h5>Temp Min: </h5>
+                                                            <h5>{{pogoda.main.temp_min | round}}&deg;C</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div class="main temp_max d-flex align-items-center justify-content-between flex-row">
+                                                        <img src="../../../assets/images/temp_max.svg" class="img-fluid" alt="">
+                                                        <div>
+                                                            <h5>Temp Max: </h5>
+                                                            <h5>{{pogoda.main.temp_max | round}}&deg;C</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

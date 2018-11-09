@@ -5,8 +5,52 @@ body {
   body h3 {
     margin-bottom: 2rem;
     color: #fff; }
-  body .sort-day label {
+  body p.error {
     color: #fff; }
+  body input {
+    height: auto;
+    border-radius: unset;
+    color: #000; }
+    body input::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      color: #000; }
+    body input::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #000; }
+    body input:-ms-input-placeholder {
+      /* IE 10+ */
+      color: #000; }
+    body input:-moz-placeholder {
+      /* Firefox 18- */
+      color: #000; }
+  body button,
+  body input {
+    border: 3px solid #fff; }
+    body button:focus,
+    body input:focus {
+      outline: 0;
+      box-shadow: none; }
+  body .sort-day h3 {
+    color: #fff;
+    margin-bottom: 0; }
+  body .sort-day .input-group {
+    width: 40%; }
+    body .sort-day .input-group input {
+      padding: 10px; }
+    body .sort-day .input-group .input-group-append button {
+      border-radius: 0;
+      margin-left: 0; }
+      body .sort-day .input-group .input-group-append button.btn-outline-secondary {
+        color: #000;
+        border: 3px solid #fff;
+        background-color: #fff;
+        transform: all 1s; }
+        body .sort-day .input-group .input-group-append button.btn-outline-secondary:focus, body .sort-day .input-group .input-group-append button.btn-outline-secondary:active {
+          outline: 0;
+          box-shadow: none; }
+        body .sort-day .input-group .input-group-append button.btn-outline-secondary:hover {
+          background-color: #000;
+          color: #fff; }
   body .form {
     margin-top: 3rem;
     margin-bottom: 5rem; }
@@ -16,28 +60,12 @@ body {
       text-align: center; }
     body .form form.form-inline {
       position: relative; }
-      body .form form.form-inline button:focus,
-      body .form form.form-inline input:focus {
-        outline: 0;
-        box-shadow: none; }
       body .form form.form-inline input {
-        padding: 30px;
-        border-radius: unset;
+        padding: 20px;
         width: 100%;
-        border: none;
-        color: #000; }
-        body .form form.form-inline input::-webkit-input-placeholder {
-          /* Chrome/Opera/Safari */
-          color: #000; }
-        body .form form.form-inline input::-moz-placeholder {
-          /* Firefox 19+ */
-          color: #000; }
-        body .form form.form-inline input:-ms-input-placeholder {
-          /* IE 10+ */
-          color: #000; }
-        body .form form.form-inline input:-moz-placeholder {
-          /* Firefox 18- */
-          color: #000; }
+        transition: border 1s; }
+        body .form form.form-inline input.error {
+          border: 3px solid red; }
       body .form form.form-inline button {
         position: absolute;
         float: right;
@@ -49,6 +77,8 @@ body {
   body .jumbotron {
     padding: 1rem;
     background-color: #fff; }
+    body .jumbotron .forecast p.datetime {
+      margin-top: 2rem; }
     body .jumbotron .forecast h2 {
       text-align: center; }
     body .jumbotron .forecast .city_details .main {
@@ -69,8 +99,21 @@ body {
         body .jumbotron .forecast .city_details .main.temp img {
           height: 6rem;
           margin-right: 1rem; }
+      body .jumbotron .forecast .city_details .main.wind img {
+        margin-right: 1rem; }
 
-@media (max-width: 1199.98px) {
+@media (max-width: 991.98px) {
+  body .sort-day .input-group {
+    width: 100%; }
+  body .jumbotron .forecast .city_details .main.temp {
+    margin-top: 2rem; }
+    body .jumbotron .forecast .city_details .main.temp h2 {
+      font-size: 3rem; }
+    body .jumbotron .forecast .city_details .main.temp img {
+      height: 4rem; }
+  body .jumbotron .forecast .city_details .main.wind {
+    margin-bottom: 2rem; } }
+@media (min-width: 992px) and (max-width: 1199.98px) {
   body .jumbotron .forecast .city_details .main.temp h2 {
     font-size: 3rem; }
   body .jumbotron .forecast .city_details .main.temp img {

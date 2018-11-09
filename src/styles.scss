@@ -8,9 +8,71 @@ body {
         margin-bottom: 2rem;
         color: #fff;
     }
-    .sort-day {
-        label {
+    p {
+        &.error {
             color: #fff;
+        }
+    }
+    input {
+        height: auto;
+        border-radius: unset;
+        color: $textColor;
+        &::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            color: $textColor;
+        }
+        &::-moz-placeholder {
+            /* Firefox 19+ */
+            color: $textColor;
+        }
+        &:-ms-input-placeholder {
+            /* IE 10+ */
+            color: $textColor;
+        }
+        &:-moz-placeholder {
+            /* Firefox 18- */
+            color: $textColor;
+        }
+    }
+    button,
+    input {
+        border: 3px solid #fff;
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+    .sort-day {
+        h3 {
+            color: #fff;
+            margin-bottom: 0;
+        }
+        .input-group {
+            width: 40%;
+            input {
+                padding: 10px;
+            }
+            .input-group-append {
+                button {
+                    border-radius: 0;
+                    margin-left: 0;
+                    &.btn-outline-secondary {
+                        color: #000;
+                        border: 3px solid #fff;
+                        background-color: #fff;
+                        transform: all 1s;
+                        &:focus,
+                        &:active {
+                            outline: 0;
+                            box-shadow: none;
+                        }
+                        &:hover {
+                            background-color: #000;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
         }
     }
     .form {
@@ -24,34 +86,12 @@ body {
         form {
             &.form-inline {
                 position: relative;
-                button,
                 input {
-                    &:focus {
-                        outline: 0;
-                        box-shadow: none;
-                    }
-                }
-                input {
-                    padding: 30px;
-                    border-radius: unset;
+                    padding: 20px;
                     width: 100%;
-                    border: none;
-                    color: $textColor;
-                    &::-webkit-input-placeholder {
-                        /* Chrome/Opera/Safari */
-                        color: $textColor;
-                    }
-                    &::-moz-placeholder {
-                        /* Firefox 19+ */
-                        color: $textColor;
-                    }
-                    &:-ms-input-placeholder {
-                        /* IE 10+ */
-                        color: $textColor;
-                    }
-                    &:-moz-placeholder {
-                        /* Firefox 18- */
-                        color: $textColor;
+                    transition: border 1s;
+                    &.error {
+                        border: 3px solid red;
                     }
                 }
                 button {
@@ -74,11 +114,15 @@ body {
             }
         }
     }
-
     .jumbotron {
         padding: 1rem;
         background-color: #fff;
         .forecast {
+            p {
+                &.datetime {
+                    margin-top: 2rem;
+                }
+            }
             h2 {
                 text-align: center;
             }
@@ -111,13 +155,16 @@ body {
                             margin-right: 1rem;
                         }
                     }
+                    &.wind {
+                        img {
+                            margin-right: 1rem;
+                        }
+                    }
                 }
             }
         }
     }
-
 }
-
 
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) {}
@@ -126,10 +173,38 @@ body {
 @media (max-width: 767.98px) {}
 
 // Medium devices (tablets, less than 992px)
-@media (max-width: 991.98px) {}
+@media (max-width: 991.98px) {
+    body {
+        .sort-day {
+            .input-group {
+                width: 100%;
+            }
+        }
+        .jumbotron {
+            .forecast {
+                .city_details {
+                    .main {
+                        &.temp {
+                            margin-top: 2rem;
+                            h2 {
+                                font-size: 3rem;
+                            }
+                            img {
+                                height: 4rem;
+                            }
+                        }
+                        &.wind {
+                            margin-bottom: 2rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 // Large devices (desktops, less than 1200px)
-@media (max-width: 1199.98px) {
+@media (min-width: 992px) and (max-width: 1199.98px) {
     body {
         .jumbotron {
             .forecast {

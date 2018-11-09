@@ -8,12 +8,14 @@ import {RoundPipe} from './round.pipe';
 
 import {CityIdService} from './cityid.service';
 import { LoadingComponent } from './view/loading/loading.component';
+import { HomeComponent } from './view/home/home.component';
 
 @NgModule({
 	declarations: [
 		RoundPipe,
 		AppComponent,
-		LoadingComponent
+		LoadingComponent,
+		HomeComponent
 	],
 	imports: [
 		BrowserModule,
