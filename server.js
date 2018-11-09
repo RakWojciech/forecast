@@ -2,10 +2,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-app.use(express.static(__dirname+'/dist'));
+app.use(express.static(__dirname+'/dist/forecast'));
 
 app.get('/*', function(req, res){
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
+    res.sendFile(path.join(__dirname + '/dist/forecast/index.html'));
 });
 
 var server = app.listen(process.env.PORT || 8080, function() {
