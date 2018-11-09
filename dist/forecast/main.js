@@ -701,7 +701,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var CityIdService = /** @class */ (function () {
     function CityIdService(http) {
         this.http = http;
-        this._url = '/assets/data.json';
+        this._url = 'https://weaterforecast.herokuapp.com/assets/data.json';
     }
     CityIdService.prototype.getCityId = function () {
         return this.http.get(this._url);

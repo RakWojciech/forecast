@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class CityIdService {
 
-	private _url = '/assets/data.json';
+	private _url = 'https://weaterforecast.herokuapp.com/assets/data.json';
 
 	constructor(private http: HttpClient) {
 
