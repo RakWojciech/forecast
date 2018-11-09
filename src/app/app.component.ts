@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
 				{
 					data: tempArray,   // Example data
 					backgroundColor: [
-						'#00b4ff',
+						'rgba(0, 180, 255, .2)',
 					],
 					borderColor: [
 						'#00b4ff',
