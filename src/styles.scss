@@ -8,110 +8,116 @@ body {
         margin-bottom: 2rem;
         color: #fff;
     }
-}
-
-.form {
-    margin-top: 3rem;
-    margin-bottom: 5rem;
-    h2 {
-        margin-bottom: 2rem;
-        color: #fff;
-        text-align: center;
-    }
-    form {
-        &.form-inline {
-            position: relative;
-            button,
-            input {
-                &:focus {
-                    outline: 0;
-                    box-shadow: none;
-                }
-            }
-            input {
-                padding: 30px;
-                border-radius: unset;
-                width: 100%;
-                border: none;
-                color: $textColor;
-                &::-webkit-input-placeholder {
-                    /* Chrome/Opera/Safari */
-                    color: $textColor;
-                }
-                &::-moz-placeholder {
-                    /* Firefox 19+ */
-                    color: $textColor;
-                }
-                &:-ms-input-placeholder {
-                    /* IE 10+ */
-                    color: $textColor;
-                }
-                &:-moz-placeholder {
-                    /* Firefox 18- */
-                    color: $textColor;
-                }
-            }
-            button {
-                position: absolute;
-                float: right;
-                right: 1rem;
-                background-color: transparent;
-                border: none;
-                //     width: 10%;
-                //     padding: 18px;
-                //     border: none;
-                //     background-color: $textColor;
-                //     img {
-                //         height: 20px;
-                //     }
-                &:hover {
-                    cursor: pointer;
-                }
-            }
+    .sort-day {
+        label {
+            color: #fff;
         }
     }
-}
-
-.jumbotron {
-    padding: 1rem;
-    background-color: #fff;
-    .forecast {
+    .form {
+        margin-top: 3rem;
+        margin-bottom: 5rem;
         h2 {
+            margin-bottom: 2rem;
+            color: #fff;
             text-align: center;
         }
-        .city_details {
-            .main {
-                // display: flex;
-                // align-items: center;
-                // justify-content: space-between;
-                // flex-direction: row;
-                margin: 1rem;
-                h5 {
-                    padding: 0;
-                    margin: .5rem;
-                }
-                img {
-                    height: 3rem;
-                    margin-right: 2rem;
-                }
-                p {
-                    margin: 0;
-                }
-                &.temp {
-                    flex-direction: row;
-                    justify-content: flex-end;
-                    h2 {
-                        font-size: 4rem;
+        form {
+            &.form-inline {
+                position: relative;
+                button,
+                input {
+                    &:focus {
+                        outline: 0;
+                        box-shadow: none;
                     }
-                    img {
-                        height: 6rem;
-                        margin-right: 1rem;
+                }
+                input {
+                    padding: 30px;
+                    border-radius: unset;
+                    width: 100%;
+                    border: none;
+                    color: $textColor;
+                    &::-webkit-input-placeholder {
+                        /* Chrome/Opera/Safari */
+                        color: $textColor;
+                    }
+                    &::-moz-placeholder {
+                        /* Firefox 19+ */
+                        color: $textColor;
+                    }
+                    &:-ms-input-placeholder {
+                        /* IE 10+ */
+                        color: $textColor;
+                    }
+                    &:-moz-placeholder {
+                        /* Firefox 18- */
+                        color: $textColor;
+                    }
+                }
+                button {
+                    position: absolute;
+                    float: right;
+                    right: 1rem;
+                    background-color: transparent;
+                    border: none;
+                    //     width: 10%;
+                    //     padding: 18px;
+                    //     border: none;
+                    //     background-color: $textColor;
+                    //     img {
+                    //         height: 20px;
+                    //     }
+                    &:hover {
+                        cursor: pointer;
                     }
                 }
             }
         }
     }
+
+    .jumbotron {
+        padding: 1rem;
+        background-color: #fff;
+        .forecast {
+            h2 {
+                text-align: center;
+            }
+            .city_details {
+                .main {
+                    // display: flex;
+                    // align-items: center;
+                    // justify-content: space-between;
+                    // flex-direction: row;
+                    margin: 1rem;
+                    h5 {
+                        padding: 0;
+                        margin: .5rem;
+                    }
+                    img {
+                        height: 3rem;
+                        margin-right: 2rem;
+                    }
+                    p {
+                        margin: 0;
+                    }
+                    &.temp {
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        h2 {
+                            font-size: 4rem;
+                        }
+                        img {
+                            height: 6rem;
+                            margin-right: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
+
 
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) {}

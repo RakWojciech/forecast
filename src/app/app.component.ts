@@ -10,9 +10,11 @@ import * as Chart from 'chart.js';
 })
 export class AppComponent implements OnInit {
 	@ViewChild('chart') chart: ElementRef;
+	@ViewChild('CityNameChild') CityNameChild: ElementRef;
 	city;
 	cityArray = [];
 	CityName;
+	CityLowerCase;
 	dateArray = [];
 	showDays = [];
 	forecastList;
@@ -20,15 +22,17 @@ export class AppComponent implements OnInit {
 	forecast = [];
 	displayDays = [];
 	loading = false;
-	avgPressure = [];
 	avg = 0;
+	dailyCharArr = [];
+	DailyMeasurement = [];
+	showContent = false;
 
 	constructor(private http: HttpClient, private _cityId: CityIdService) {
 
 	}
 
 	ngOnInit() {
-
+		this.CityNameChild.nativeElement.focus()
 		this._cityId.getCityId().subscribe(data => {
 			this.city = data;
 
@@ -45,16 +49,16 @@ export class AppComponent implements OnInit {
 	displayChart(temp) {
 		const tempArray = [];
 		const dateArray = [];
-		temp.forEach( e => {
+		temp.forEach(e => {
 			tempArray.push(e.main.temp);
 			const fullDate = new Date(e.dt_txt);
 			// let date = fullDate.
-			console.log(new Date(e.dt_txt));
+			// console.log(new Date(e.dt_txt));
 
 			dateArray.push(fullDate.getDate() + '/' + fullDate.getMonth());
 		});
-		console.log(tempArray);
-		console.log(dateArray);
+		// console.log(tempArray);
+		// console.log(dateArray);
 		const donutCtx = this.chart.nativeElement.getContext('2d');
 
 		const data = {
@@ -107,7 +111,8 @@ export class AppComponent implements OnInit {
 	}
 
 	calculateDayAvgPressure(e) {
-		e.forEach( (val, key, arr) => {
+		this.avg = 0;
+		e.forEach((val, key, arr) => {
 			// console.log(arr[key].main);
 			// console.log( val);
 			this.avg = this.avg + arr[key].main.pressure / arr.length;
@@ -115,50 +120,110 @@ export class AppComponent implements OnInit {
 		});
 	}
 
-	submit() {
-		this.loading = true;
-		this.city.forEach(e => {
-			if (e.name === this.CityName) {
+	getMeasurement(CityName) {
+		this._cityId.getByName(CityName).subscribe(data => {
+			if (data) {
+				this.loading = false;
+				this.showContent = true;
+				this.forecastList = data;
+				this.forecastData = this.forecastList.list;
+				for (let i = 0; i < this.forecastData.length; i++) {
 
-				this._cityId.getByName(e.name).subscribe(data => {
+					const date = new Date(this.forecastData[i].dt_txt);
 
-					this.forecastList = data;
-					// this.forecastData = this.forecastList.list;
-					for (let i = 0; i < this.forecastList.list.length; i++) {
+					if (!this.dateArray.includes(date.getDate())) {
+						this.dateArray.push(date.getDate());
+					}
+				}
 
-						const date = new Date(this.forecastList.list[i].dt_txt);
+				this.showDays = this.dateArray.slice(Math.max(this.dateArray.length - 5, 0));
 
-						if (!this.dateArray.includes(date.getDate())) {
-							this.dateArray.push(date.getDate());
+				this.showDays.forEach(e => {
+					for (let i = 0; i < this.forecastData.length; i++) {
+						const date = new Date(this.forecastData[i].dt_txt);
+						if (date.getDate() === e) {
+							this.displayDays.push(this.forecastData[i]);
 						}
 					}
-
-					this.showDays = this.dateArray.slice(Math.max(this.dateArray.length - 5, 0));
-
-					// console.log(this.showDays);
-					this.showDays.forEach(e => {
-						for (let i = 0; i < this.forecastList.list.length; i++) {
-							const date = new Date(this.forecastList.list[i].dt_txt);
-							if (date.getDate() === e) {
-								this.displayDays.push(this.forecastList.list[i]);
-								// this.avgPressure = e;
-								// this.avgPressure.day.pressure = this.forecastData[i].main.pressure;
-								// this.avgPressure.push({e : { 'pressure' : this.forecastData[i].main.pressure } });
-								// console.log(this.forecastData[i]);
-							}
-						}
-					});
-					// this.avg = this.avgPressure.reduce((previous, current) => current += previous);
-					// this.avg = this.avg / this.avgPressure.length;
-					// console.log("AVG"+this.avg);
-					// console.log(this.avgPressure);
 				});
+			}
+		});
+	}
+
+	// DailyMeasurement(e) {
+	// 	if (this.CityName) {
+	// 		this.getMeasurement(this.CityName);
+	// 		this.displayDays.forEach(el => {
+	// 			let date = new Date(el.dt_txt);
+	// 			let month = date.getMonth() + 1;
+	// 			let day = date.getDate();
+	// 			let year = date.getFullYear();
+	// 			let daily = year + '-' + month + '-' + day;
+	//
+	// 			if (daily === e.srcElement.value) {
+	// 				this.DailyMeasurement.push(el);
+	// 				console.log(this.DailyMeasurement);
+	// 			}
+	// 		});
+	// 		// setTimeout(() => {
+	// 		// 	this.forecast = this.DailyMeasurement;
+	// 		// }, 500);
+	// 	}
+	// }
+	dailyMeasurement(e) {
+		this.DailyMeasurement = [];
+		if (this.CityName) {
+			this.getMeasurement(this.CityName);
+			this.displayDays.forEach(el => {
+				let date = new Date(el.dt_txt);
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+				let year = date.getFullYear();
+				let daily = year + '-' + month + '-' + day;
+
+				if (daily === e.srcElement.value) {
+					this.DailyMeasurement.push(el);
+					console.log(this.DailyMeasurement);
+				}
+			});
+			setTimeout(() => {
+				this.forecast = this.DailyMeasurement;
+			}, 500);
+		}
+	}
+	dailyChar(e) {
+		this.dailyCharArr = [];
+		if (this.CityName) {
+			this.getMeasurement(this.CityName);
+			this.displayDays.forEach(el => {
+				let date = new Date(el.dt_txt);
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
+				let year = date.getFullYear();
+				let daily = year + '-' + month + '-' + day;
+				console.log(daily, e.srcElement.value);
+				if (daily === e.srcElement.value) {
+					this.dailyCharArr.push(el);
+					console.log(this.dailyCharArr);
+				}
+			});
+			setTimeout(() => {
+				this.displayChart(this.dailyCharArr);
+			}, 500);
+		}
+	}
+
+	submit() {
+		this.loading = true;
+		this.CityLowerCase = this.CityName.toLowerCase();
+		this.CityName = this.CityLowerCase.charAt(0).toUpperCase() + this.CityLowerCase.slice(1);
+		this.city.forEach(e => {
+			if (e.name === this.CityName) {
+				this.getMeasurement(this.CityName);
 				setTimeout(() => {
 					this.forecast = this.displayDays;
 					this.displayChart(this.forecast);
 					this.calculateDayAvgPressure(this.forecast);
-					// console.log(this.displayDays);
-					this.loading = false;
 				}, 500);
 			}
 		});
