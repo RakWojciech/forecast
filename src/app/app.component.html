@@ -8,27 +8,32 @@
             </form>
         </div>
     </div>
-
+    <div class="row" *ngIf="avg">
+        <div class="col-12">
+            <h3>Average pressure: {{avg | number:'1.1-2'}} hpa</h3>
+        </div>
+    </div>
     <!--<h2>{{CityName}}</h2>-->
     <app-loading *ngIf="loading"></app-loading>
     <div class="row">
         <div class="col-12">
-            <canvas #donut></canvas>
+            <!-- <h3>Last 5 days</h3> -->
+            <canvas #chart></canvas>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
             <div *ngFor="let pogoda of forecast">
+
+
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
                         <div class="forecast">
-
                             <p><b>{{pogoda.dt_txt}}</b></p>
                             <div class="city_details">
                                 <div class="row w-100 align-items-center">
                                     <div class="col-12 col-md-4">
-                                        <div class="main temp">
-
+                                        <div class="main temp d-flex align-items-center justify-content-center flex-row">
                                             <img src="../assets/images/temp.svg" class="img-fluid" alt="">
                                             <div>
                                                 <h2>{{pogoda.main.temp | round}} &deg;C</h2>
@@ -37,28 +42,28 @@
                                     </div>
                                     <div class="col-12 col-md-8 d-flex align-items-center justify-content-start flex-column">
                                         <div class="row">
-                                            <div class="col-12 d-flex align-items-center">
-                                                <div class="main pressure">
-                                                    <img src="../assets/images/humidity.svg" class="img-fluid" alt="">
+                                            <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
+                                                <div class="main pressure d-flex align-items-center justify-content-between flex-row">
+                                                    <img src="../assets/images/pressure.png" class="img-fluid" alt="">
                                                     <div>
                                                         <h5>Pressure:</h5>
-                                                        <h5>{{pogoda.main.pressure}}</h5>
+                                                        <h5>{{pogoda.main.pressure}} hpa</h5>
                                                     </div>
                                                 </div>
-                                                <div class="main humidity">
+                                                <div class="main humidity d-flex align-items-center justify-content-between flex-row">
                                                     <div>
                                                         <img src="../assets/images/humidity.svg" class="img-fluid" alt="">
                                                     </div>
                                                     <div>
                                                         <h5>Humidity: </h5>
-                                                        <h5>{{pogoda.main.humidity}}</h5>
+                                                        <h5>{{pogoda.main.humidity}} %</h5>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 d-flex align-items-center">
-                                                <div class="main temp_min">
+                                            <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
+                                                <div class="main temp_min d-flex align-items-center justify-content-between flex-row">
                                                     <div>
 
                                                         <img src="../assets/images/temp_min.svg" class="img-fluid" alt="">
@@ -66,15 +71,15 @@
                                                     <div>
 
                                                         <h5>Temp Min: </h5>
-                                                        <h5>{{pogoda.main.temp_min | round}}</h5>
+                                                        <h5>{{pogoda.main.temp_min | round}}&deg;C</h5>
                                                     </div>
                                                 </div>
-                                                <div class="main temp_max">
+                                                <div class="main temp_max d-flex align-items-center justify-content-between flex-row">
                                                     <img src="../assets/images/temp_max.svg" class="img-fluid" alt="">
                                                     <div>
 
                                                         <h5>Temp Max: </h5>
-                                                        <h5>{{pogoda.main.temp_max | round}}</h5>
+                                                        <h5>{{pogoda.main.temp_max | round}}&deg;C</h5>
                                                     </div>
                                                 </div>
                                             </div>

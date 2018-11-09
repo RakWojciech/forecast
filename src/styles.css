@@ -2,6 +2,9 @@
 @import url(~bootstrap/dist/css/bootstrap.css);
 body {
   background-color: #484b54; }
+  body h3 {
+    margin-bottom: 2rem;
+    color: #fff; }
 
 .form {
   margin-top: 3rem;
@@ -10,23 +13,38 @@ body {
     margin-bottom: 2rem;
     color: #fff;
     text-align: center; }
-  .form form.form-inline button:focus, .form form.form-inline input:focus {
-    outline: 0;
-    box-shadow: none; }
-  .form form.form-inline input {
-    padding: 30px;
-    border-radius: unset;
-    width: 90%;
-    border: none; }
-  .form form.form-inline button {
-    width: 10%;
-    padding: 18px;
-    border: none;
-    background-color: #000; }
-    .form form.form-inline button img {
-      height: 20px; }
-    .form form.form-inline button:hover {
-      cursor: pointer; }
+  .form form.form-inline {
+    position: relative; }
+    .form form.form-inline button:focus,
+    .form form.form-inline input:focus {
+      outline: 0;
+      box-shadow: none; }
+    .form form.form-inline input {
+      padding: 30px;
+      border-radius: unset;
+      width: 100%;
+      border: none;
+      color: #000; }
+      .form form.form-inline input::-webkit-input-placeholder {
+        /* Chrome/Opera/Safari */
+        color: #000; }
+      .form form.form-inline input::-moz-placeholder {
+        /* Firefox 19+ */
+        color: #000; }
+      .form form.form-inline input:-ms-input-placeholder {
+        /* IE 10+ */
+        color: #000; }
+      .form form.form-inline input:-moz-placeholder {
+        /* Firefox 18- */
+        color: #000; }
+    .form form.form-inline button {
+      position: absolute;
+      float: right;
+      right: 1rem;
+      background-color: transparent;
+      border: none; }
+      .form form.form-inline button:hover {
+        cursor: pointer; }
 
 .jumbotron {
   padding: 1rem;
@@ -34,10 +52,6 @@ body {
   .jumbotron .forecast h2 {
     text-align: center; }
   .jumbotron .forecast .city_details .main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
     margin: 1rem; }
     .jumbotron .forecast .city_details .main h5 {
       padding: 0;
@@ -51,8 +65,15 @@ body {
       flex-direction: row;
       justify-content: flex-end; }
       .jumbotron .forecast .city_details .main.temp h2 {
-        font-size: 3rem; }
+        font-size: 4rem; }
       .jumbotron .forecast .city_details .main.temp img {
+        height: 6rem;
         margin-right: 1rem; }
+
+@media (max-width: 1199.98px) {
+  body .jumbotron .forecast .city_details .main.temp h2 {
+    font-size: 3rem; }
+  body .jumbotron .forecast .city_details .main.temp img {
+    height: 5rem; } }
 
 /*# sourceMappingURL=styles.css.map */

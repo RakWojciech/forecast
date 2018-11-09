@@ -9,6 +9,7 @@ import * as Chart from 'chart.js';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+	@ViewChild('chart') chart: ElementRef;
 	city;
 	cityArray = [];
 	CityName;
@@ -20,8 +21,7 @@ export class AppComponent implements OnInit {
 	displayDays = [];
 	loading = false;
 	avgPressure = [];
-	avg;
-	@ViewChild('donut') donut: ElementRef;
+	avg = 0;
 
 	constructor(private http: HttpClient, private _cityId: CityIdService) {
 
@@ -43,23 +43,25 @@ export class AppComponent implements OnInit {
 	}
 
 	displayChart(temp) {
-		let tempArray = [];
-		let dateArray = [];
-		// tempArray.push(temp);
-		// console.log(temp);
+		const tempArray = [];
+		const dateArray = [];
 		temp.forEach( e => {
 			tempArray.push(e.main.temp);
-			dateArray.push(e.dt_txt);
-		});
-		// console.log(dateArray);
+			const fullDate = new Date(e.dt_txt);
+			// let date = fullDate.
+			console.log(new Date(e.dt_txt));
 
-		const donutCtx = this.donut.nativeElement.getContext('2d');
+			dateArray.push(fullDate.getDate() + '/' + fullDate.getMonth());
+		});
+		console.log(tempArray);
+		console.log(dateArray);
+		const donutCtx = this.chart.nativeElement.getContext('2d');
 
 		const data = {
 			labels: dateArray,
 			datasets: [
 				{
-					data: tempArray,   // Example data
+					data: tempArray,
 					backgroundColor: [
 						'rgba(0, 180, 255, .2)',
 					],
@@ -85,17 +87,16 @@ export class AppComponent implements OnInit {
 					scales: {
 						yAxes: [{
 							ticks: {
-								fontColor: "#fff",
+								fontColor: '#fff',
 								fontSize: 16,
-								// stepSize: 1,
+								stepSize: 4,
 								beginAtZero: true
 							}
 						}],
 						xAxes: [{
 							ticks: {
-								fontColor: "#fff",
+								fontColor: '#fff',
 								fontSize: 16,
-								// stepSize: 1,
 								beginAtZero: true
 							}
 						}]
@@ -106,10 +107,12 @@ export class AppComponent implements OnInit {
 	}
 
 	calculateDayAvgPressure(e) {
-		console.log(e);
-		// e.forEach( el => {
-		// 	console.log(el.main.pressure);
-		// });
+		e.forEach( (val, key, arr) => {
+			// console.log(arr[key].main);
+			// console.log( val);
+			this.avg = this.avg + arr[key].main.pressure / arr.length;
+			// this.avg = Math.floor(this.avg )
+		});
 	}
 
 	submit() {
@@ -120,24 +123,25 @@ export class AppComponent implements OnInit {
 				this._cityId.getByName(e.name).subscribe(data => {
 
 					this.forecastList = data;
-					this.forecastData = this.forecastList.list;
-					for (let i = 0; i < this.forecastData.length; i++) {
+					// this.forecastData = this.forecastList.list;
+					for (let i = 0; i < this.forecastList.list.length; i++) {
 
-						const date = new Date(this.forecastData[i].dt_txt);
+						const date = new Date(this.forecastList.list[i].dt_txt);
 
 						if (!this.dateArray.includes(date.getDate())) {
 							this.dateArray.push(date.getDate());
 						}
 					}
 
-					this.showDays = this.dateArray.slice(Math.max(this.dateArray.length - 5, 1));
+					this.showDays = this.dateArray.slice(Math.max(this.dateArray.length - 5, 0));
 
+					// console.log(this.showDays);
 					this.showDays.forEach(e => {
-						for (let i = 0; i < this.forecastData.length; i++) {
-							const date = new Date(this.forecastData[i].dt_txt);
+						for (let i = 0; i < this.forecastList.list.length; i++) {
+							const date = new Date(this.forecastList.list[i].dt_txt);
 							if (date.getDate() === e) {
-								this.displayDays.push(this.forecastData[i]);
-								// this.avgPressure.day = e;
+								this.displayDays.push(this.forecastList.list[i]);
+								// this.avgPressure = e;
 								// this.avgPressure.day.pressure = this.forecastData[i].main.pressure;
 								// this.avgPressure.push({e : { 'pressure' : this.forecastData[i].main.pressure } });
 								// console.log(this.forecastData[i]);
@@ -152,6 +156,7 @@ export class AppComponent implements OnInit {
 				setTimeout(() => {
 					this.forecast = this.displayDays;
 					this.displayChart(this.forecast);
+					this.calculateDayAvgPressure(this.forecast);
 					// console.log(this.displayDays);
 					this.loading = false;
 				}, 500);
