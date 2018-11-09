@@ -576,20 +576,20 @@ var AppComponent = /** @class */ (function () {
         }
     };
     AppComponent.prototype.submit = function () {
-        var _this = this;
         this.loading = true;
         this.CityLowerCase = this.CityName.toLowerCase();
         this.CityName = this.CityLowerCase.charAt(0).toUpperCase() + this.CityLowerCase.slice(1);
-        this.city.forEach(function (e) {
-            if (e.name === _this.CityName) {
-                _this.getMeasurement(_this.CityName);
-                setTimeout(function () {
-                    _this.forecast = _this.displayDays;
-                    _this.displayChart(_this.forecast);
-                    _this.calculateDayAvgPressure(_this.forecast);
-                }, 500);
-            }
-        });
+        console.log(this.city);
+        // this.city.forEach(e => {
+        // 	if (e.name === this.CityName) {
+        // 		this.getMeasurement(this.CityName);
+        // 		setTimeout(() => {
+        // 			this.forecast = this.displayDays;
+        // 			this.displayChart(this.forecast);
+        // 			this.calculateDayAvgPressure(this.forecast);
+        // 		}, 500);
+        // 	}
+        // });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('chart'),
