@@ -26,7 +26,10 @@
     "core-js": "^2.5.4",
     "npm": "^6.4.1",
     "rxjs": "~6.3.3",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "express": "*",
+    "body-parser": "*",
+    "bcrypt": "^0.8.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",
