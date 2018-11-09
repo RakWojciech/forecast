@@ -20,7 +20,8 @@
         <div class="col-12">
             <div class="sort-day mb-3">
                 <label>Daily chart</label>
-                <input type="date" class="ml-3" (change)="dailyChar($event)"/>
+                <input type="date" class="ml-3" #dailyChart/>
+                <button (click)="dailyChar()">Load</button>
             </div>
             <!-- <h3>Last 5 days</h3> -->
             <canvas #chart></canvas>
@@ -30,7 +31,8 @@
         <div class="col-12">
             <div class="sort-day mt-3 mb-3">
                 <label>Daily sort</label>
-                <input type="date" class="ml-3" (change)="dailyMeasurement($event)"/>
+                <input type="date" class="ml-3" #dailySort/>
+                <button (click)="dailyMeasurement()">Load</button>
             </div>
             <div *ngFor="let pogoda of forecast">
                 <div class="jumbotron jumbotron-fluid">
