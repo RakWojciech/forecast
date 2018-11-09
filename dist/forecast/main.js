@@ -699,12 +699,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var CityIdService = /** @class */ (function () {
+    // private _url = ;
     function CityIdService(http) {
         this.http = http;
-        this._url = 'https://weaterforecast.herokuapp.com/assets/data.json';
     }
     CityIdService.prototype.getCityId = function () {
-        return this.http.get(this._url);
+        return this.http.get('https://weaterforecast.herokuapp.com/assets/data.json');
     };
     CityIdService.prototype.getByName = function (location) {
         // return this.http.get(this._url);
