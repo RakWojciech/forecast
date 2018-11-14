@@ -44,29 +44,39 @@
                     </div>
                 </div>
                 <div class="container">
-                    <div *ngFor="let pogoda of forecast">
-                        <!-- <div class="jumbotron jumbotron-fluid"> -->
+                    <!--<div *ngFor="let pogoda of forecast">-->
+                        <!--{{pogoda.main | json}}-->
+                        <!--<div *ngFor="let main of toArray(pogoda.main)">-->
+                            <!---->
+                            <!--{{main | json}}-->
+                            <!--<hr>-->
+                        <!--</div>-->
+                        <!--{{pogoda}}-->
 
+                    <!--</div>-->
+                    <div *ngFor="let pogoda of forecast; last as isLast">
+                        <div class="jumbotron jumbotron-fluid">
+                        {{isLast}}
                         <div class="forecast">
-                            <!-- <p class="datetime"><b>{{pogoda.dt_txt}}</b></p> -->
+                             <p class="datetime"><b>{{pogoda.dt_txt}}</b></p>
                             <div class="city_details">
-                                <!-- <div class="row w-100 align-items-center"> -->
-                                <!-- <div class="col-12 col-md-6 col-lg-4"> -->
+                                <div class="row w-100 align-items-center">
+                                <div class="col-12 col-md-6 col-lg-4">
                                 <div class="main temp d-flex align-items-center justify-content-center flex-row">
                                     <img src="../../../assets/images/temp.svg" class="img-fluid" alt="">
                                     <div>
                                         <h2>{{pogoda.main.temp | round}} &deg;C</h2>
                                     </div>
                                 </div>
-                                <!-- <div class="main wind d-flex align-items-center justify-content-lg-end  justify-content-center flex-row">
+                                <div class="main wind d-flex align-items-center justify-content-lg-end  justify-content-center flex-row">
                                                 <img src="../../../assets/images/wind.svg" alt="">
                                                 <div>
                                                     <p>{{pogoda.wind.speed}} km/h</p>
                                                     <p>{{pogoda.weather[0].description}}</p>
                                                 </div>
-                                            </div> -->
-                                <!-- </div> -->
-                                <!-- <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center justify-content-start flex-column">
+                                            </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center justify-content-start flex-column">
                                             <div class="row">
                                                 <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
                                                     <div class="main pressure d-flex align-items-center justify-content-between flex-row">
@@ -107,12 +117,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
-                                <!-- </div> -->
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- </div> -->
+                    </div>
                 </div>
             </div>
         </div>

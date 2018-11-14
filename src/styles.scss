@@ -107,9 +107,9 @@ body {
             }
         }
     }
-    // .jumbotron {
-    //     padding: 1rem;
-    //     background-color: #fff;
+    .jumbotron {
+        padding: 1rem;
+        background-color: #fff;
     .forecast {
         h2 {
             text-align: center;
@@ -147,18 +147,18 @@ body {
             }
         }
     }
-    // }
+    }
 }
 
 @media (max-width: 776.98px) {
     body {
-        // .jumbotron {
-        //     p {
-        //         &.datetime {
-        //             margin-top: 2rem;
-        //         }
-        //     }
-        // }
+        .jumbotron {
+            p {
+                &.datetime {
+                    margin-top: 2rem;
+                }
+            }
+        }
     }
 }
 
@@ -169,7 +169,7 @@ body {
                 width: 100%;
             }
         }
-        // .jumbotron {
+        .jumbotron {
         .forecast {
             .city_details {
                 .main {
@@ -188,27 +188,27 @@ body {
                 }
             }
         }
-        // }
+        }
     }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) {
     body {
-        // .jumbotron {
-        .forecast {
-            .city_details {
-                .main {
-                    &.temp {
-                        h2 {
-                            font-size: 3rem;
-                        }
-                        img {
-                            height: 5rem;
-                        }
-                    }
-                }
-            }
+        .jumbotron {
+			.forecast {
+				.city_details {
+					.main {
+						&.temp {
+							h2 {
+								font-size: 3rem;
+							}
+							img {
+								height: 5rem;
+							}
+						}
+					}
+				}
+			}
         }
-        // }
     }
 }
