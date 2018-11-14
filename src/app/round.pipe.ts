@@ -3,7 +3,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 	name : 'round'
 })
 export class RoundPipe implements PipeTransform {
-	transform(val : number) : number {
+	transform(val: number): number {
 		return Math.round(val);
 	}
 }

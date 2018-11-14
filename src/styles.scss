@@ -1,15 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~bootstrap/dist/css/bootstrap.css";
-@import "./assets/partials/variables";
+$textColor: #000;
 body {
-    background-color: #484b54;
+    background-color: #484b54 !important;
     h3 {
         margin-bottom: 2rem;
         color: #fff;
     }
     p {
         &.error {
+            margin-top: .5rem;
             color: #fff;
         }
     }
@@ -40,6 +40,9 @@ body {
         &:focus {
             outline: 0;
             box-shadow: none;
+        }
+        &:hover {
+            cursor: pointer;
         }
     }
     .sort-day {
@@ -100,79 +103,65 @@ body {
                     right: 1rem;
                     background-color: transparent;
                     border: none;
-                    //     width: 10%;
-                    //     padding: 18px;
-                    //     border: none;
-                    //     background-color: $textColor;
-                    //     img {
-                    //         height: 20px;
-                    //     }
-                    &:hover {
-                        cursor: pointer;
+                }
+            }
+        }
+    }
+    // .jumbotron {
+    //     padding: 1rem;
+    //     background-color: #fff;
+    .forecast {
+        h2 {
+            text-align: center;
+        }
+        .city_details {
+            .main {
+                margin: 1rem;
+                h5 {
+                    padding: 0;
+                    margin: .5rem;
+                }
+                img {
+                    height: 3rem;
+                    margin-right: 2rem;
+                }
+                p {
+                    margin: 0;
+                }
+                &.temp {
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    h2 {
+                        font-size: 4rem;
+                    }
+                    img {
+                        height: 6rem;
+                        margin-right: 1rem;
+                    }
+                }
+                &.wind {
+                    img {
+                        margin-right: 1rem;
                     }
                 }
             }
         }
     }
-    .jumbotron {
-        padding: 1rem;
-        background-color: #fff;
-        .forecast {
-            p {
-                &.datetime {
-                    margin-top: 2rem;
-                }
-            }
-            h2 {
-                text-align: center;
-            }
-            .city_details {
-                .main {
-                    // display: flex;
-                    // align-items: center;
-                    // justify-content: space-between;
-                    // flex-direction: row;
-                    margin: 1rem;
-                    h5 {
-                        padding: 0;
-                        margin: .5rem;
-                    }
-                    img {
-                        height: 3rem;
-                        margin-right: 2rem;
-                    }
-                    p {
-                        margin: 0;
-                    }
-                    &.temp {
-                        flex-direction: row;
-                        justify-content: flex-end;
-                        h2 {
-                            font-size: 4rem;
-                        }
-                        img {
-                            height: 6rem;
-                            margin-right: 1rem;
-                        }
-                    }
-                    &.wind {
-                        img {
-                            margin-right: 1rem;
-                        }
-                    }
-                }
-            }
-        }
+    // }
+}
+
+@media (max-width: 776.98px) {
+    body {
+        // .jumbotron {
+        //     p {
+        //         &.datetime {
+        //             margin-top: 2rem;
+        //         }
+        //     }
+        // }
     }
 }
 
-// Extra small devices (portrait phones, less than 576px)
-@media (max-width: 575.98px) {}
-
-// Small devices (landscape phones, less than 768px)
-@media (max-width: 767.98px) {}
-
-// Medium devices (tablets, less than 992px)
 @media (max-width: 991.98px) {
     body {
         .sort-day {
@@ -180,47 +169,46 @@ body {
                 width: 100%;
             }
         }
-        .jumbotron {
-            .forecast {
-                .city_details {
-                    .main {
-                        &.temp {
-                            margin-top: 2rem;
-                            h2 {
-                                font-size: 3rem;
-                            }
-                            img {
-                                height: 4rem;
-                            }
+        // .jumbotron {
+        .forecast {
+            .city_details {
+                .main {
+                    &.temp {
+                        margin-top: 2rem;
+                        h2 {
+                            font-size: 3rem;
                         }
-                        &.wind {
-                            margin-bottom: 2rem;
+                        img {
+                            height: 4rem;
                         }
+                    }
+                    &.wind {
+                        margin-bottom: 2rem;
                     }
                 }
             }
         }
+        // }
     }
 }
 
-// Large devices (desktops, less than 1200px)
 @media (min-width: 992px) and (max-width: 1199.98px) {
     body {
-        .jumbotron {
-            .forecast {
-                .city_details {
-                    .main {
-                        &.temp {
-                            h2 {
-                                font-size: 3rem;
-                            }
-                            img {
-                                height: 5rem;
-                            }
+        // .jumbotron {
+        .forecast {
+            .city_details {
+                .main {
+                    &.temp {
+                        h2 {
+                            font-size: 3rem;
+                        }
+                        img {
+                            height: 5rem;
                         }
                     }
                 }
             }
         }
+        // }
     }
 }

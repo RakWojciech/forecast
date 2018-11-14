@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 form">
-            <h2>Type city to check temperature</h2>
+            <h2>Type city name to check forecast</h2>
             <form class="form-inline" (submit)="submit()">
                 <input type="text" id="CityName" placeholder="City name" [(ngModel)]="CityName" [ngModelOptions]="{standalone: true}" [class.error]="!showContent && !homeState" #CityNameChild>
                 <button><img src="../assets/images/search.svg" alt=""></button>
@@ -23,7 +23,7 @@
                 <div class="sort-day mb-3">
                     <h3>Temperature chart</h3>
                     <div class="input-group mt-3 mb-3">
-                        <input type="date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" #dailyChart>
+                        <input type="date" min="{{firstDate}}" max="{{lastDate}}" aria-describedby="button-addon2" #dailyChart>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="dailyChar()">Load</button>
                         </div>
@@ -37,35 +37,36 @@
                 <div class="sort-day mt-3 mb-3">
                     <h3>Daily sort</h3>
                     <div class="input-group mt-3 mb-3">
-                        <input type="date" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" #dailySort>
+                        <input type="date" min="{{firstDate}}" max="{{lastDate}}" aria-describedby="button-addon2" #dailySort>
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="dailyMeasurement()">Load</button>
                         </div>
                     </div>
                 </div>
-                <div *ngFor="let pogoda of forecast">
-                    <div class="jumbotron jumbotron-fluid">
-                        <div class="container">
-                            <div class="forecast">
-                                <p class="datetime"><b>{{pogoda.dt_txt}}</b></p>
-                                <div class="city_details">
-                                    <div class="row w-100 align-items-center">
-                                        <div class="col-12 col-md-6 col-lg-4">
-                                            <div class="main temp d-flex align-items-center justify-content-center flex-row">
-                                                <img src="../../../assets/images/temp.svg" class="img-fluid" alt="">
-                                                <div>
-                                                    <h2>{{pogoda.main.temp | round}} &deg;C</h2>
-                                                </div>
-                                            </div>
-                                            <div class="main wind d-flex align-items-center justify-content-lg-end  justify-content-center flex-row">
+                <div class="container">
+                    <div *ngFor="let pogoda of forecast">
+                        <!-- <div class="jumbotron jumbotron-fluid"> -->
+
+                        <div class="forecast">
+                            <!-- <p class="datetime"><b>{{pogoda.dt_txt}}</b></p> -->
+                            <div class="city_details">
+                                <!-- <div class="row w-100 align-items-center"> -->
+                                <!-- <div class="col-12 col-md-6 col-lg-4"> -->
+                                <div class="main temp d-flex align-items-center justify-content-center flex-row">
+                                    <img src="../../../assets/images/temp.svg" class="img-fluid" alt="">
+                                    <div>
+                                        <h2>{{pogoda.main.temp | round}} &deg;C</h2>
+                                    </div>
+                                </div>
+                                <!-- <div class="main wind d-flex align-items-center justify-content-lg-end  justify-content-center flex-row">
                                                 <img src="../../../assets/images/wind.svg" alt="">
                                                 <div>
                                                     <p>{{pogoda.wind.speed}} km/h</p>
                                                     <p>{{pogoda.weather[0].description}}</p>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center justify-content-start flex-column">
+                                            </div> -->
+                                <!-- </div> -->
+                                <!-- <div class="col-12 col-md-6 col-lg-8 d-flex align-items-center justify-content-start flex-column">
                                             <div class="row">
                                                 <div class="col-12 d-flex align-items-center justify-content-center flex-wrap">
                                                     <div class="main pressure d-flex align-items-center justify-content-between flex-row">
@@ -106,12 +107,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                        </div> -->
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

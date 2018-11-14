@@ -1,0 +1,19 @@
+[{
+        "id": 3489297,
+        "name": "New Kingston",
+        "country": "JM",
+        "coord": {
+            "lon": -76.783188,
+            "lat": 18.007469
+        }
+    },
+    {
+        "id": 1859472,
+        "name": "Kimiidera",
+        "country": "JP",
+        "coord": {
+            "lon": 135.199997,
+            "lat": 34.183331
+        }
+    }
+]

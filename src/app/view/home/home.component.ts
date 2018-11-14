@@ -2,7 +2,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CityIdService} from '../../cityid.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import * as Chart from 'chart.js';
+import * as Chart from '../../../assets/js/chart.min.js';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -30,29 +31,35 @@ export class HomeComponent implements OnInit {
 	showContent = false;
 	homeState = false;
 	wrongCityName = false;
-	constructor(private http: HttpClient, private _cityId: CityIdService, private router: Router) {
+	StopIteration;
+	firstDate;
+	lastDate;
+	daily;
 
-	}
+	constructor(private http: HttpClient, private _cityId: CityIdService, private router: Router) {}
 
 	ngOnInit() {
 		this.loading = true;
 		this.homeState = true;
-		this.CityNameChild.nativeElement.focus();
+		this.getCity();
+	}
+	getCity() {
 		this._cityId.getCityId().subscribe(
 			data => {
 				this.city = data;
 				setTimeout(() => {
 					this.cityList();
 					this.loading = false;
+					this.CityNameChild.nativeElement.focus();
 				}, 500);
 			},
-			error1 => {
-				console.log(error1);
+			error => {
+				console.log(error);
 				this.loading = true;
+				this.showContent = false;
 			}
 		);
 	}
-
 	cityList() {
 		this.city.forEach(e => {
 			this.cityArray.push(e.name);
@@ -60,7 +67,6 @@ export class HomeComponent implements OnInit {
 	}
 
 	displayChart(temp) {
-		console.log(temp);
 		const tempArray = [];
 		const dateArray = [];
 		temp.forEach(e => {
@@ -70,7 +76,6 @@ export class HomeComponent implements OnInit {
 			dateArray.push(fullDate.getDate() + '/' + fullDate.getMonth());
 		});
 		const donutCtx = this.chart.nativeElement.getContext('2d');
-		// dateArray = [1];
 
 		const data = {
 			labels: dateArray,
@@ -84,7 +89,8 @@ export class HomeComponent implements OnInit {
 						'#00b4ff',
 					],
 					borderWidth: 1
-				}]
+				}
+			]
 		};
 
 		const chart = new Chart(
@@ -101,6 +107,10 @@ export class HomeComponent implements OnInit {
 					},
 					scales: {
 						yAxes: [{
+							gridLines: {
+								color: 'rgba(171,171,171,1)',
+								lineWidth: 1
+							},
 							ticks: {
 								fontColor: '#fff',
 								fontSize: 16,
@@ -109,6 +119,10 @@ export class HomeComponent implements OnInit {
 							}
 						}],
 						xAxes: [{
+							gridLines: {
+								color: 'rgba(171,171,171,1)',
+								lineWidth: 1
+							},
 							ticks: {
 								fontColor: '#fff',
 								fontSize: 16,
@@ -139,11 +153,22 @@ export class HomeComponent implements OnInit {
 				this.forecastData = this.forecastList.list;
 				for (let i = 0; i < this.forecastData.length; i++) {
 					const date = new Date(this.forecastData[i].dt_txt);
+					if (i === 0) {
+						this.createDate(date);
+						this.firstDate = this.daily;
+						// console.log(this.firstDate);
+					} else if (i === this.forecastData.length - 1) {
+						this.createDate(date);
+						this.lastDate = this.daily;
+						// console.log(this.firstDate);
+					}
 					if (!this.dateArray.includes(date.getDate())) {
 						this.dateArray.push(date.getDate());
 					}
 				}
-				this.showDays = this.dateArray.slice(0, this.dateArray.length - 1);
+				// console.log(this.dateArray);
+				// this.showDays = this.dateArray.slice(0, this.dateArray.length - 1);
+				this.showDays = this.dateArray.slice(Math.max(this.dateArray.length - 5));
 				this.showDays.forEach(e => {
 					for (let i = 0; i < this.forecastData.length; i++) {
 						const date = new Date(this.forecastData[i].dt_txt);
@@ -153,24 +178,27 @@ export class HomeComponent implements OnInit {
 					}
 				});
 			},
-			error1 => {
-				this.loading = false;
+			error => {
+				console.log(error);
+				this.loading = true;
 				this.showContent = false;
 			}
 		);
 	}
-
+	createDate(date) {
+		let month = ('0' + (date.getMonth() + 1)).slice(-2);
+		let day = ('0' + date.getDate()).slice(-2);
+		let year = date.getFullYear();
+		this.daily = year + '-' + month + '-' + day;
+	}
 	dailyMeasurement() {
 		this.DailyMeasurementArray = [];
 		this.forecast = [];
 		if (this.CityName) {
 			this.displayDays.forEach(el => {
 				let date = new Date(el.dt_txt);
-				let month = ('0' + (date.getMonth() + 1)).slice(-2);
-				let day = ('0' + date.getDate()).slice(-2);
-				let year = date.getFullYear();
-				let daily = year + '-' + month + '-' + day;
-				if (daily === this.dailySort.nativeElement.value) {
+				this.createDate(date);
+				if (this.daily === this.dailySort.nativeElement.value) {
 					this.DailyMeasurementArray.push(el);
 				}
 				if (this.dailySort.nativeElement.value === '') {
@@ -188,12 +216,8 @@ export class HomeComponent implements OnInit {
 		if (this.CityName) {
 			this.displayDays.forEach(el => {
 				let date = new Date(el.dt_txt);
-				let month = ('0' + (date.getMonth() + 1)).slice(-2);
-				let day = ('0' + date.getDate()).slice(-2);
-				let year = date.getFullYear();
-				let daily = year + '-' + month + '-' + day;
-				console.log(daily, this.dailyChart.nativeElement.value);
-				if (daily === this.dailyChart.nativeElement.value) {
+				this.createDate(date);
+				if (this.daily === this.dailyChart.nativeElement.value) {
 					this.dailyCharArr.push(el);
 				}
 				if (this.dailyChart.nativeElement.value === '') {
@@ -207,61 +231,36 @@ export class HomeComponent implements OnInit {
 	}
 
 	submit() {
+		this.wrongCityName = true;
 		this.forecast = [];
 		this.displayDays = [];
 		this.loading = true;
 		this.CityLowerCase = this.CityName.toLowerCase();
-		this.CityName = this.CityLowerCase.charAt(0).toUpperCase() + this.CityLowerCase.slice(1);
+		let temp = [];
+		for (let i = 0; i < this.CityLowerCase.split(' ').length; i++) {
+			temp[i] = this.CityLowerCase.split(' ')[i];
+			temp[i] = temp[i].charAt(0).toUpperCase() + temp[i].slice(1);
+			// console.log(temp);
+		}
+		this.CityName = temp.join(' ');
+		// console.log(this.CityName);
 		this.city.some((i, idx, array) => {
-			// console.log(i)
+			// console.log(i.name);
 			if (i.name === this.CityName) {
 				this.getMeasurement(this.CityName);
 				setTimeout(() => {
-					// console.log('test');
-					// console.log(this.displayDays);
 					this.forecast = this.displayDays;
-					// console.log(this.forecast);
 					this.displayChart(this.forecast);
 					this.calculateDayAvgPressure(this.forecast);
-					// if (this.forecast.length <= 0) {
-						// this.loading = false;
-						// this.showContent = false;
-						// this.homeState = false;
-					// }
 				}, 500);
 				this.wrongCityName = false;
 				return true;
 			}
-			// else {
-			// 	if (!this.wrongCityName) {
-			// 		this.loading = false;
-			// 		this.showContent = false;
-			// 		this.homeState = false;
-			// 	}
-			// 	return false;
-			// }
-			// else {
-			// 	if (idx === 100) {
-			// 		alert("OK");
-			// 		// // 	this.loading = false;
-			// 		// // 	this.showContent = false;
-			// 		// // 	this.homeState = false;
-			// 	}
-			// }
-			// console.log(idx, array.length - 1);
-			// if (idx === array.length - 1) {
-			// 	console.log(array.length);
-			// // 	this.loading = false;
-			// // 	this.showContent = false;
-			// // 	this.homeState = false;
-			// }
 		});
-		if (!this.wrongCityName) {
+		if ( this.wrongCityName ) {
 			this.loading = false;
 			this.showContent = false;
 			this.homeState = false;
 		}
-		// if(this.city)
-		// console.log(this.city);
 	}
 }
