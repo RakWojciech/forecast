@@ -1,8 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Input, AfterContentInit } from '@angular/core';
 import { CityIdService } from '../../cityid.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import * as Chart from '../../../assets/js/chart.min.js';
+import { ChartComponent } from '../chart/chart.component';
+import { ChartService } from '../../chart.service';
 
 @Component({
 	selector: 'app-home',
@@ -10,11 +12,12 @@ import * as Chart from '../../../assets/js/chart.min.js';
 	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-	@ViewChild('chart') chart: ElementRef;
+	// @Input() chart: ChartComponent;
 	@ViewChild('dailyChart') dailyChart: ElementRef;
 	@ViewChild('dailySort') dailySort: ElementRef;
 	@ViewChild('CityNameChild') CityNameChild: ElementRef;
 	city;
+	cityID;
 	cityArray = [];
 	CityName;
 	CityLowerCase;
@@ -23,8 +26,6 @@ export class HomeComponent implements OnInit {
 	forecastList;
 	forecastData;
 	forecast = [];
-	// displayDays = [];
-	// displayDaysTest = [];
 	loading = false;
 	avg = 0;
 	dailyCharArr = [];
@@ -36,23 +37,23 @@ export class HomeComponent implements OnInit {
 	firstDate;
 	lastDate;
 	daily;
-
+	data = ['a', 'b', 'c', 'd'];
 	obj = {};
 	array = [];
-
+	temp;
 	appStatus;
 
 	constructor(
 		private http: HttpClient,
 		private _cityId: CityIdService,
-		private router: Router
+		private router: Router,
+		private chartSer: ChartService
 	) { }
 
 	ngOnInit() {
 		this.CityNameChild.nativeElement.focus();
-		// this.loading = true;
-		// this.homeState = true;
 	}
+
 	getCity() {
 		return new Promise((resolve, reject) => {
 			this._cityId.getCityId().subscribe(
@@ -71,71 +72,7 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
-	displayChart(temp) {
-		const tempArray = [];
-		const dateArray = [];
-		temp.forEach(e => {
-			tempArray.push(e.main.temp);
-			const fullDate = new Date(e.dt_txt);
 
-			dateArray.push(fullDate.getDate() + '/' + fullDate.getMonth());
-		});
-		const donutCtx = this.chart.nativeElement.getContext('2d');
-
-		const data = {
-			labels: dateArray,
-			datasets: [
-				{
-					data: tempArray,
-					backgroundColor: ['rgba(0, 180, 255, .2)'],
-					borderColor: ['#00b4ff'],
-					borderWidth: 1
-				}
-			]
-		};
-
-		const chart = new Chart(donutCtx, {
-			type: 'line',
-			data: data,
-			options: {
-				legend: {
-					display: false,
-					labels: {
-						fontColor: '#fff'
-					}
-				},
-				scales: {
-					yAxes: [
-						{
-							gridLines: {
-								color: 'rgba(171,171,171,1)',
-								lineWidth: 1
-							},
-							ticks: {
-								fontColor: '#fff',
-								fontSize: 16,
-								stepSize: 4,
-								beginAtZero: true
-							}
-						}
-					],
-					xAxes: [
-						{
-							gridLines: {
-								color: 'rgba(171,171,171,1)',
-								lineWidth: 1
-							},
-							ticks: {
-								fontColor: '#fff',
-								fontSize: 16,
-								beginAtZero: true
-							}
-						}
-					]
-				}
-			}
-		});
-	}
 
 	calculateDayAvgPressure(e) {
 		this.avg = 0;
@@ -183,8 +120,8 @@ export class HomeComponent implements OnInit {
 							}
 						}
 					});
-					console.log('here');
-					console.log(this.forecast);
+					// console.log('here');
+					// console.log(this.forecast);
 				},
 				error => {
 					console.log(error);
@@ -198,17 +135,16 @@ export class HomeComponent implements OnInit {
 		});
 	}
 	createDate(date) {
-		let month = ('0' + (date.getMonth() + 1)).slice(-2);
-		let day = ('0' + date.getDate()).slice(-2);
-		let year = date.getFullYear();
+		const month = ('0' + (date.getMonth() + 1)).slice(-2);
+		const day = ('0' + date.getDate()).slice(-2);
+		const year = date.getFullYear();
 		this.daily = year + '-' + month + '-' + day;
 	}
 	dailyMeasurement() {
 		this.DailyMeasurementArray = [];
-		let fullForecast = this.forecast;
 		if (this.CityName) {
 			this.forecast.forEach(el => {
-				let date = new Date(el.dt_txt);
+				const date = new Date(el.dt_txt);
 				// console.log(date);
 				this.createDate(date);
 				console.log(this.daily, this.dailySort.nativeElement.value);
@@ -231,8 +167,8 @@ export class HomeComponent implements OnInit {
 		this.dailyCharArr = [];
 		if (this.CityName) {
 			this.forecast.forEach(el => {
-				console.log(el);
-				let date = new Date(el.dt_txt);
+				// console.log(el);
+				const date = new Date(el.dt_txt);
 				this.createDate(date);
 				if (this.daily === this.dailyChart.nativeElement.value) {
 					this.dailyCharArr.push(el);
@@ -242,11 +178,35 @@ export class HomeComponent implements OnInit {
 				}
 			});
 			setTimeout(() => {
-				this.displayChart(this.dailyCharArr);
+				// this.chartSer.displayChart(this.dailyCharArr);
+				this.temp = this.dailyCharArr;
+				// this.chart.displayChart(this.dailyCharArr);
 			}, 500);
 		}
 	}
-
+	getCityData() {
+		return new Promise((resolve, reject) => {
+			// console.log("tutej");
+			console.log(this.city);
+			this.city.some((i, idx, array) => {
+				if (i.name === this.CityName) {
+					this.getMeasurement(this.CityName).then(() => {
+						// this.chartSer.displayChart(this.forecast);
+						this.temp = this.forecast;
+						// this.chart.displayChart(this.forecast);
+						this.calculateDayAvgPressure(this.forecast);
+						this.wrongCityName = false;
+						this.loading = false;
+						this.homeState = true;
+						return true;
+					});
+				}
+			});
+			setTimeout(() => {
+				resolve();
+			}, 500);
+		});
+	}
 	submit() {
 		this.loading = true;
 		this.homeState = true;
@@ -257,30 +217,20 @@ export class HomeComponent implements OnInit {
 				this.forecast = [];
 				this.loading = true;
 				this.CityLowerCase = this.CityName.toLowerCase();
-				let temp = [];
+				const temp = [];
 				for (let i = 0; i < this.CityLowerCase.split(' ').length; i++) {
 					temp[i] = this.CityLowerCase.split(' ')[i];
 					temp[i] = temp[i].charAt(0).toUpperCase() + temp[i].slice(1);
 				}
 				this.CityName = temp.join(' ');
-
-				this.city.some((i, idx, array) => {
-					if (i.name === this.CityName) {
-						this.getMeasurement(this.CityName).then(() => {
-							this.displayChart(this.forecast);
-							this.calculateDayAvgPressure(this.forecast);
-							this.wrongCityName = false;
-							this.loading = false;
-							this.homeState = true;
-							return true;
-						});
+				console.log(this.city);
+				this.getCityData().then(() => {
+					if (this.wrongCityName) {
+						this.loading = false;
+						this.showContent = false;
+						this.homeState = false;
 					}
 				});
-				if (this.wrongCityName) {
-					this.loading = false;
-					this.showContent = false;
-					this.homeState = false;
-				}
 			}
 		);
 	}
